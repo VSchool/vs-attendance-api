@@ -1,9 +1,9 @@
 {
   "include": ["src/**/*.ts"],
-  "exclude": ["src/**/*.test.ts"],
+  "exclude": ["src/**/*.test.ts", "node_modules/**/*"],
   "compilerOptions": {
     "outDir": "dist",
     "esModuleInterop": true,
-    "lib": ["ES2020", "DOM"]
+    "lib": ["ES2020", "DOM"],
   }
 }

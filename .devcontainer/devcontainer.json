@@ -1,0 +1,13 @@
+{
+  "name": "vs-attendance-api",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "IronGeek.vscode-env",
+        "esbenp.prettier-vscode",
+        "Postman.postman-for-vscode"
+      ]
+    }
+  }
+}

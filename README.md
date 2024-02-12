@@ -1,1 +1,1 @@
-# vs-attendance-api
+# VS-attendance-api

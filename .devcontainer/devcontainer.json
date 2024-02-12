@@ -8,8 +8,12 @@
         "esbenp.prettier-vscode",
         "Postman.postman-for-vscode",
         "github.vscode-github-actions",
-        "genieai.chatgpt-vscode"
+        "genieai.chatgpt-vscode",
+        "GitHub.vscode-pull-request-github"
       ]
     }
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli": {}
   }
 }

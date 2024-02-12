@@ -6,8 +6,14 @@
       "extensions": [
         "IronGeek.vscode-env",
         "esbenp.prettier-vscode",
-        "Postman.postman-for-vscode"
+        "Postman.postman-for-vscode",
+        "github.vscode-github-actions",
+        "genieai.chatgpt-vscode",
+        "GitHub.vscode-pull-request-github"
       ]
     }
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli": {}
   }
 }

@@ -9,6 +9,6 @@
     "module": "NodeNext",
     "strict": true,
     "moduleResolution": "NodeNext",
-    "target": "ESNext",
+    "target": "ESNext"
   }
 }

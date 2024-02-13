@@ -1,6 +1,6 @@
 import { config } from "dotenv";
 import { server } from "./server";
-import { hostname } from "os";
+import { hostname } from "node:os";
 
 config();
 

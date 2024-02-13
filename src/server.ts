@@ -1,5 +1,5 @@
 import ex, { NextFunction, Request, Response } from "express";
-import path from "path";
+import path from "node:path";
 import { qrCodeRouter } from "./routers/qr-code.router";
 
 const server = ex();

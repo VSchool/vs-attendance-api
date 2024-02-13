@@ -4,11 +4,11 @@
   "compilerOptions": {
     "outDir": "dist",
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
+    // "allowSyntheticDefaultImports": true,
     "lib": ["DOM", "ESNext"],
-    "module": "NodeNext",
-    "strict": true,
-    "moduleResolution": "NodeNext",
-    "target": "ESNext"
+    // "module": "NodeNext",
+    "strict": true
+    // "moduleResolution": "NodeNext",
+    // "target": "ESNext"
   }
 }

@@ -5,8 +5,9 @@
     "outDir": "dist",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "lib": ["ES2020", "DOM"],
+    "lib": ["ESNext", "DOM"],
     "module": "NodeNext",
+    "strict": true,
     "moduleResolution": "NodeNext",
     "target": "ESNext"
   }

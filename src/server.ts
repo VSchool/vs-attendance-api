@@ -1,4 +1,4 @@
-import ex from "express";
+import ex, { NextFunction, Request, Response } from "express";
 import path from "path";
 import { qrCodeRouter } from "./routers/qr-code.router";
 
@@ -22,8 +22,11 @@ server.use((req, res, next) => {
 });
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-server.use((err, req, res, _next) => {
-  res.send({ message: err.message });
-});
+server.use(
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  (err: Error, req: Request, res: Response, _next: NextFunction): void => {
+    res.send({ message: err.message });
+  },
+);
 
 export { server };

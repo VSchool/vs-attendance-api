@@ -1,14 +1,10 @@
 {
   "include": ["src/**/*.ts"],
-  "exclude": ["src/**/*.test.ts", "src/__tests__/**/*"],
+  "exclude": ["src/**/*.test.ts", "src/__tests__/**/*", "node_modules/**/*"],
   "compilerOptions": {
     "outDir": "dist",
     "esModuleInterop": true,
-    // "allowSyntheticDefaultImports": true,
     "lib": ["DOM", "ESNext"],
-    // "module": "NodeNext",
     "strict": true
-    // "moduleResolution": "NodeNext",
-    // "target": "ESNext"
   }
 }

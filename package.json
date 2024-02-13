@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "nodemon",
     "test": "npm run lint && jest",
-    "build": "tsc --build --verbose",
+    "build": "tsc --build --verbose --listFiles",
     "start": "node ./dist/index.js",
     "lint": "tsc --noEmit && eslint --fix .",
     "format": "prettier . --write"

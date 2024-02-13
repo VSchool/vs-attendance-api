@@ -1,9 +1,12 @@
 {
   "include": ["src/**/*.ts"],
-  "exclude": ["src/**/*.test.ts"],
+  "exclude": ["src/**/*.test.ts", "src/__tests__/**/*"],
   "compilerOptions": {
     "outDir": "dist",
     "esModuleInterop": true,
-    "lib": ["ES2020", "DOM"]
+    "lib": ["ES2020", "DOM"],
+    "moduleResolution": "node",
+    "module": "CommonJS",
+    "target": "ES5"
   }
 }

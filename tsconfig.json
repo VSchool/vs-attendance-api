@@ -1,8 +1,7 @@
 {
-  "include": ["src/**/*.ts"],
-  "exclude": ["src/**/*.test.ts", "src/__tests__/**/*"],
+  "include": ["./src/**/*.ts"],
+  "exclude": ["./src/**/*.test.ts", "src/__tests__/**/*"],
   "compilerOptions": {
-    "rootDir": ".",
     "outDir": "./dist",
     "esModuleInterop": true,
     "lib": ["DOM", "ESNext"],

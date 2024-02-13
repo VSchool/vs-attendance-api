@@ -4,9 +4,10 @@
   "compilerOptions": {
     "outDir": "dist",
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "lib": ["ES2020", "DOM"],
-    "moduleResolution": "node",
     "module": "CommonJS",
+    "moduleResolution": "node",
     "target": "ES5"
   }
 }

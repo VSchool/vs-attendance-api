@@ -5,7 +5,7 @@
     "outDir": "dist",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "lib": ["ESNext", "DOM"],
+    "lib": ["DOM", "ES2016"],
     "module": "NodeNext",
     "strict": true,
     "moduleResolution": "NodeNext",

@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "nodemon",
     "test": "npm run lint && jest",
-    "build": "webpack && npm prune --production",
+    "build": "tsc --build --verbose",
     "start": "node ./dist/index.js",
     "lint": "tsc --noEmit && eslint --fix .",
     "format": "prettier . --write"
@@ -36,8 +36,6 @@
     "ts-jest": "^29.1.2",
     "ts-loader": "^9.5.1",
     "ts-node": "^10.9.2",
-    "typescript": "^5.3.3",
-    "webpack": "^5.90.1",
-    "webpack-cli": "^5.1.4"
+    "typescript": "^5.3.3"
   }
 }

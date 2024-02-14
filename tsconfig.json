@@ -6,7 +6,5 @@
     "esModuleInterop": true,
     "lib": ["DOM", "ESNext"],
     "strict": true
-    // "moduleResolution": "node",
-    // "module": "es6",
   }
 }

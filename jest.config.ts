@@ -6,7 +6,7 @@ const config: Config = {
   preset: "ts-jest",
   testMatch: ["**/*.test.ts"],
   clearMocks: true,
-  setupFiles: ['<rootDir>/src/__tests__/setup.ts']
+  setupFiles: ["<rootDir>/src/__tests__/setup.ts"],
 };
 
 export default config;

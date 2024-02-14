@@ -1,6 +1,5 @@
 import { mockServer } from "./__tests__/utils";
 
-
 describe("server.ts", () => {
   it("should run", async () => {
     const response = await mockServer().get("/ping");

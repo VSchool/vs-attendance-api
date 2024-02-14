@@ -9,6 +9,7 @@
       "request": "launch",
       "name": "Launch Server",
       "skipFiles": ["<node_internals>/**"],
+      "envFile": "${workspaceFolder}/.env",
       "program": "${workspaceFolder}/tmp/index.js",
       "preLaunchTask": "tsc: build - tsconfig.debug.json",
       "outFiles": ["${workspaceFolder}/tmp/**/*.js"],

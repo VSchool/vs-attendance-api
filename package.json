@@ -5,7 +5,7 @@
     "dev": "dotenvx run -- nodemon",
     "test": "npm run lint && dotenvx run -- jest",
     "build": "tsc --build --verbose",
-    "start": "node ./dist/index.js",
+    "start": "dotenvx run -- node ./dist/index.js",
     "lint": "tsc --noEmit && eslint --fix . && npm run format",
     "format": "prettier . --write"
   },

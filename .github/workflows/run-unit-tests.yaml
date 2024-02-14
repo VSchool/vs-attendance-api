@@ -11,4 +11,4 @@ jobs:
       - run: npm install
       - run: npm t
         env:
-          SECRET: "test"
+          DOTENV_KEY: ${{ secrets.DOTENV_KEY }}

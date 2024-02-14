@@ -1,4 +1,8 @@
 node_modules
 dist
 tmp
+
+# environment variables
 .env
+.env.ci
+.env.keys

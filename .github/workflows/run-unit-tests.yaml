@@ -10,3 +10,5 @@ jobs:
           node-version: "20"
       - run: npm install
       - run: npm t
+        env:
+          SECRET: "test"

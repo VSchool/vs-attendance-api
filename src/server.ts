@@ -8,7 +8,7 @@ server.use(ex.json());
 server.use(ex.static(path.resolve(__dirname, "..", "public")));
 server.get("/ping", (req, res) => res.status(200).send({ message: "pong" }));
 
-server.get("/docs", (req, res) => {
+server.get(["/", "/docs"], (req, res) => {
   res
     .status(200)
     .sendFile(path.resolve(__dirname, "..", "public", "documentation.html"));

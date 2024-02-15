@@ -7,6 +7,10 @@ import { ORIGIN_WHITELIST } from "./constants";
 const server = ex();
 
 server.use(
+  (req, res, next) => {
+    console.log(req.method, req.hostname, req.headers.origin);
+    next()
+  },
   cors((req, cb) => {
     cb(null, { origin: ORIGIN_WHITELIST.includes(req.headers.origin || "") });
   }),

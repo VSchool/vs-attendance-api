@@ -3,6 +3,7 @@ import path from "path";
 import { qrCodeRouter } from "./routers/qr-code.router";
 import cors from "cors";
 import { ORIGIN_WHITELIST } from "./constants";
+import { attendanceRouter } from "./routers/attendance.router";
 
 const server = ex();
 
@@ -26,6 +27,7 @@ server.get(["/", "/docs"], (req, res) => {
 });
 
 server.use("/api/qr-code", qrCodeRouter);
+server.use("/api/attendance", attendanceRouter);
 
 server.use((req, res, next) => {
   res.status(404).send({ message: "Not found" });

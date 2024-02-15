@@ -1,1 +1,3 @@
-# VS-attendance-api
+# VS Attendance API
+
+`Under Construction`

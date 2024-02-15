@@ -1,6 +1,7 @@
 {
   "include": ["./src/**/*.ts"],
   "exclude": ["./src/**/*.test.ts", "src/__tests__/**/*"],
+  "files": ["./src/types.d.ts"],
   "compilerOptions": {
     "outDir": "./dist",
     "esModuleInterop": true,

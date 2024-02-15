@@ -1,9 +1,16 @@
 import ex, { NextFunction, Request, Response } from "express";
 import path from "path";
 import { qrCodeRouter } from "./routers/qr-code.router";
+import cors from "cors";
+import { ORIGIN_WHITELIST } from "./constants";
 
 const server = ex();
 
+server.use(
+  cors((req, cb) => {
+    cb(null, { origin: ORIGIN_WHITELIST.includes(req.headers.origin || "") });
+  }),
+);
 server.use(ex.json());
 server.use(ex.static(path.resolve(__dirname, "..", "public")));
 server.get("/ping", (req, res) => res.status(200).send({ message: "pong" }));
@@ -25,7 +32,8 @@ server.use((req, res, next) => {
 server.use(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   (err: Error, req: Request, res: Response, _next: NextFunction): void => {
-    res.send({ message: err.message });
+    const status = err.name === "UnauthorizedError" ? 401 : 500;
+    res.status(status).send({ message: err.message });
   },
 );
 

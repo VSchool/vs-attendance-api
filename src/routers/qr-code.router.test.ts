@@ -15,7 +15,7 @@ describe("qr-code-router.ts", () => {
     expect(decoded).toBe(
       `${process.env.ADMIN_CLIENT_BASE_URL}?access_token=ACCESS_TOKEN`,
     );
-    expect(signSpy.mock.calls[0][2].expiresIn).toBe("5y");
+    expect(signSpy.mock.calls[0][2].expiresIn).toBe(process.env.ACCESS_TOKEN_DURATION);
   });
 
   it("Should validate an access token", async () => {

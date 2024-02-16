@@ -7,18 +7,19 @@ import { attendanceRouter } from "./routers/attendance.router";
 
 const server = ex();
 
-server.use(ex.json())
+server.use(ex.json());
 server.use((req, res, next) => {
-  console.log(req.method, req.hostname, req.headers.origin, req.body);
-  next()
-})
-server.use(ex.static(path.resolve(__dirname, "..", "public"))
-)
-server.use(cors((req, cb) => {
-  cb(null, { origin: ORIGIN_WHITELIST.includes(req.headers.origin || "") });
-}))
+  console.log(req.method);
+  console.log(req.body);
+  next();
+});
 server.use(ex.static(path.resolve(__dirname, "..", "public")));
-
+server.use(
+  cors((req, cb) => {
+    cb(null, { origin: ORIGIN_WHITELIST.includes(req.headers.origin || "") });
+  }),
+);
+server.use(ex.static(path.resolve(__dirname, "..", "public")));
 
 server.get("/ping", (req, res) => res.status(200).send({ message: "pong" }));
 

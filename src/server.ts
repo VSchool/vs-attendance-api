@@ -3,20 +3,24 @@ import path from "path";
 import { qrCodeRouter } from "./routers/qr-code.router";
 import cors from "cors";
 import { ORIGIN_WHITELIST } from "./constants";
+import { attendanceRouter } from "./routers/attendance.router";
 
 const server = ex();
 
+server.use(ex.json());
+server.use((req, res, next) => {
+  console.log(req.method);
+  console.log(req.body);
+  next();
+});
+server.use(ex.static(path.resolve(__dirname, "..", "public")));
 server.use(
-  (req, res, next) => {
-    console.log(req.method, req.hostname, req.headers.origin);
-    next()
-  },
   cors((req, cb) => {
     cb(null, { origin: ORIGIN_WHITELIST.includes(req.headers.origin || "") });
   }),
 );
-server.use(ex.json());
 server.use(ex.static(path.resolve(__dirname, "..", "public")));
+
 server.get("/ping", (req, res) => res.status(200).send({ message: "pong" }));
 
 server.get(["/", "/docs"], (req, res) => {
@@ -26,6 +30,7 @@ server.get(["/", "/docs"], (req, res) => {
 });
 
 server.use("/api/qr-code", qrCodeRouter);
+server.use("/api/attendance", attendanceRouter);
 
 server.use((req, res, next) => {
   res.status(404).send({ message: "Not found" });

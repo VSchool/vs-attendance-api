@@ -6,3 +6,6 @@ tmp
 .env
 .env.ci
 .env.keys
+
+# google auth credentials
+credentials.json

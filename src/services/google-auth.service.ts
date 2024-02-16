@@ -6,7 +6,7 @@ const CREDENTIALS_PATH = path.resolve(
   __dirname,
   "..",
   "..",
-  "service-account.json",
+  "credentials.json",
 );
 
 export const client = new google.auth.GoogleAuth({

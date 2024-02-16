@@ -7,5 +7,5 @@ tmp
 .env.ci
 .env.keys
 
-# credentials
-service-account.json
+# google auth credentials
+credentials.json

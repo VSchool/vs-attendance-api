@@ -10,6 +10,7 @@ const EntrySchema = new mg.Schema(
   },
   {
     timestamps: true,
+    toJSON: { virtuals: true },
     virtuals: {
       full_name: {
         get() {

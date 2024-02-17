@@ -24,5 +24,5 @@ export const checkOut = async (user: User) => {
 
 export const getAllEntries = async () => {
   const entries = await EntryModel.find();
-  return entries
-}
+  return entries;
+};

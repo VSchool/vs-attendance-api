@@ -13,7 +13,7 @@ describe("qr-code-router.ts", () => {
     );
     const decoded = await decodeQRCodeDataUrl(response.body.dataUrl);
     expect(decoded).toBe(
-      `${process.env.ADMIN_CLIENT_BASE_URL}?access_token=ACCESS_TOKEN`,
+      `${process.env.USER_CLIENT_BASE_URL}?access_token=ACCESS_TOKEN`,
     );
     expect(signSpy.mock.calls[0][2].expiresIn).toBe(
       process.env.ACCESS_TOKEN_DURATION,

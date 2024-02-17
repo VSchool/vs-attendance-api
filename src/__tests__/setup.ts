@@ -1,14 +1,3 @@
-import { NextFunction, Request, Response } from "express";
-
-jest.mock("jsonwebtoken", () => ({ sign: () => "ACCESS_TOKEN" }));
-jest.mock("express-jwt", () => ({
-  expressjwt: () => (req: Request, res: Response, next: NextFunction) => {
-    if (req.headers["authorization"] === "Bearer ACCESS_TOKEN") next();
-    else {
-      res.status(401);
-      const err = new Error("No Authorization token found");
-      err.name = "UnauthorizedError";
-      next(err);
-    }
-  },
-}));
+jest.mock("express-jwt");
+jest.mock("jsonwebtoken");
+jest.mock("../models/entry.model.ts");

@@ -1,9 +1,14 @@
 import ex from "express";
-import { checkIn, checkOut } from "../services/attendance.service";
+import { checkIn, checkOut, getAllEntries } from "../services/attendance.service";
 import { expressjwt } from "express-jwt";
 import { SubmissionType, User } from "../types";
 
 const attendanceRouter = ex.Router();
+
+attendanceRouter.get('/entries', async (req, res) => {
+  const entries = await getAllEntries();
+  res.status(200).send({ entries });
+})
 
 attendanceRouter.use(
   expressjwt({ secret: process.env.SECRET as string, algorithms: ["HS256"] }),

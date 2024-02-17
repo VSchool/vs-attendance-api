@@ -5,6 +5,7 @@ tmp
 # environment variables
 .env
 .env.ci
+.env.qa
 .env.keys
 
 # google auth credentials

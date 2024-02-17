@@ -21,3 +21,8 @@ export const checkOut = async (user: User) => {
     throw Error("Latest entry already has checked out: " + latest.end);
   await latest.updateOne({ end: new Date() });
 };
+
+export const getAllEntries = async () => {
+  const entries = await EntryModel.find();
+  return entries
+}

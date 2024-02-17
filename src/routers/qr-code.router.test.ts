@@ -1,6 +1,6 @@
 import { mockServer } from "../__tests__/utils";
 import { decodeQRCodeDataUrl } from "../services/qr-code.service";
-import jwt from "jsonwebtoken";
+import * as jwt from "jsonwebtoken";
 
 const signSpy = jest.spyOn(jwt, "sign");
 

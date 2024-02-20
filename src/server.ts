@@ -9,7 +9,7 @@ const server = ex();
 
 server.use(ex.json());
 server.use((req, res, next) => {
-  console.log(req.method, req.path, req.headers.origin);
+  console.log(req.method, req.path, req.socket.remoteAddress);
   next();
 });
 server.use(ex.static(path.resolve(__dirname, "..", "public")));

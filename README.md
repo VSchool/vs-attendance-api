@@ -52,4 +52,3 @@ Fields = {
 |`GET`|`/api/qr-code/validate`|Validates `access_token`|`{Authorization: Bearer <access_token>}`||`{success:true}`|
 |`GET`|`/api/attendance/entries`|Retrieves all `Entry` records|||`{entries:Entry[]}`|
 |`POST`|`/api/attendance/log-entry`|Creates a new timestamped `Entry`|`{Authorization: Bearer <access_token>}`|```{ "fields": Fields,"type": EntryType}```|``{success:true}``|
-|

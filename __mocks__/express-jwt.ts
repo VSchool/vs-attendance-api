@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 
-export const expressjwt =
+export const expressjwt = jest.fn(
   () => (req: Request, res: Response, next: NextFunction) => {
     if (req.headers["authorization"] === "Bearer ACCESS_TOKEN") next();
     else {
@@ -9,4 +9,5 @@ export const expressjwt =
       err.name = "UnauthorizedError";
       next(err);
     }
-  };
+  },
+);

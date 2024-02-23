@@ -2,6 +2,8 @@ import { mockServer } from "../__tests__/utils";
 import { decodeQRCodeDataUrl } from "../services/qr-code.service";
 import * as jwt from "jsonwebtoken";
 
+jest.mock("express-jwt");
+jest.mock("jsonwebtoken");
 const signSpy = jest.spyOn(jwt, "sign");
 
 describe("qr-code-router.ts", () => {

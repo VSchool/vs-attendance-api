@@ -9,12 +9,12 @@ const server = ex();
 
 server.use(ex.json());
 server.use((req, res, next) => {
-  console.log('\n')
-  console.log('Incoming request:')
-  console.log('URL:',req.method, req.path);
-  console.log('Referer:', req.headers.referer, req.headers.host)
-  console.log('Timestamp:', new Date().toISOString());
-  console.log('\n')
+  console.log("\n");
+  console.log("Incoming request:");
+  console.log("URL:", req.method, req.path, req.query);
+  console.log("Referer:", req.headers.referer, req.headers.host);
+  console.log("Timestamp:", new Date().toISOString());
+  console.log("\n");
   next();
 });
 server.use(ex.static(path.resolve(__dirname, "..", "public")));

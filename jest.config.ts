@@ -7,6 +7,7 @@ const config: Config = {
   testMatch: ["**/*.test.ts"],
   clearMocks: true,
   setupFiles: ["<rootDir>/src/__tests__/setup.ts"],
+  silent: true,
 };
 
 export default config;

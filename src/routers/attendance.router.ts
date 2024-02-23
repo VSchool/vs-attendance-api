@@ -6,11 +6,12 @@ import {
 } from "../services/attendance.service";
 import { expressjwt } from "express-jwt";
 import { SubmissionType, User } from "../types";
+import { parseEntryFilterQueryParams } from "../utils";
 
 const attendanceRouter = ex.Router();
 
 attendanceRouter.get("/entries", async (req, res) => {
-  const entries = await getAllEntries();
+  const entries = await getAllEntries(parseEntryFilterQueryParams(req.query));
   res.status(200).send({ entries });
 });
 
@@ -22,16 +23,20 @@ attendanceRouter.post("/log-entry", async (req, res, next) => {
   const { fields, type } = req.body as { fields: User; type: SubmissionType };
   try {
     switch (type) {
-      case SubmissionType.CheckIn:
-        await checkIn(fields);
+      case SubmissionType.CheckIn: {
+        const entry = await checkIn(fields);
+        res.status(200).send({ success: true, entry });
         break;
-      case SubmissionType.CheckOut:
-        await checkOut(fields);
+      }
+      case SubmissionType.CheckOut: {
+        const entry = await checkOut(fields);
+        res.status(200).send({ success: true, entry });
+        break;
+      }
     }
-    res.status(200).send({ success: true });
   } catch (err) {
     console.error(err);
-    return next(Error("There was a problem processing the request"));
+    return next(err);
   }
 });
 

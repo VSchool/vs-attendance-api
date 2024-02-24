@@ -20,6 +20,5 @@ export enum SubmissionType {
 }
 
 export interface EntryFilters {
-  first_entry?: boolean;
   email?: string;
 }

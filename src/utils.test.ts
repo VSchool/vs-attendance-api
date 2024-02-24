@@ -8,14 +8,12 @@ describe("utils.ts", () => {
     });
     it("should convert query params object to correct EntryFilters object", () => {
       const output = parseEntryFilterQueryParams({
-        first_entry: "true",
         email: "test@test.com",
       });
-      expect(output).toEqual({ first_entry: true, email: "test@test.com" });
+      expect(output).toEqual({ email: "test@test.com" });
     });
     it("should ignore invalid parameters and interpret first entry as false", () => {
       const output = parseEntryFilterQueryParams({
-        first_entry: "nope",
         nope: "nope",
       });
       expect(output).toEqual({});

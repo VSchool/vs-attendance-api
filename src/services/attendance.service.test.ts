@@ -1,15 +1,13 @@
 import { EntryModel } from "../models/entry.model";
 import { checkIn, checkOut, getAllEntries } from "./attendance.service";
+import fns from "date-fns";
 
 jest.mock("../models/entry.model");
-jest.useFakeTimers();
+jest.useFakeTimers().setSystemTime(new Date(2024, 1, 1));
 
 describe("attendance.service.test.ts", () => {
   describe("checkIn()", () => {
-    it("should create an entry with first_entry set to true for users' first entries", async () => {
-      jest
-        .spyOn(EntryModel, "find")
-        .mockImplementationOnce(jest.fn().mockResolvedValue([]));
+    it("should create an entry with start and week_of", async () => {
       await checkIn({
         firstName: "new",
         lastName: "user",
@@ -19,27 +17,8 @@ describe("attendance.service.test.ts", () => {
         first_name: "new",
         last_name: "user",
         email: "new@user.com",
-        first_entry: true,
         start: new Date(),
-      });
-      expect(EntryModel.prototype.save).toHaveBeenCalledWith();
-    });
-
-    it("should create an entry with first_entry set to false for users' subsequent entries", async () => {
-      jest
-        .spyOn(EntryModel, "find")
-        .mockImplementationOnce(jest.fn().mockResolvedValue([{}]));
-      await checkIn({
-        firstName: "new",
-        lastName: "user",
-        email: "new@user.com",
-      });
-      expect(EntryModel).toHaveBeenCalledWith({
-        first_name: "new",
-        last_name: "user",
-        email: "new@user.com",
-        first_entry: false,
-        start: new Date(),
+        week_of: fns.previousMonday(Date()),
       });
       expect(EntryModel.prototype.save).toHaveBeenCalledWith();
     });
@@ -110,10 +89,9 @@ describe("attendance.service.test.ts", () => {
         .mockImplementationOnce(jest.fn().mockResolvedValue([]));
       await getAllEntries({});
       expect(EntryModel.find).toHaveBeenCalledWith({});
-      await getAllEntries({ email: "test@test.com", first_entry: true });
+      await getAllEntries({ email: "test@test.com" });
       expect(EntryModel.find).toHaveBeenCalledWith({
         email: "test@test.com",
-        first_entry: true,
       });
     });
   });

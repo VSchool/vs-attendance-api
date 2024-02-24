@@ -7,7 +7,7 @@ const EntrySchema = new mg.Schema(
     email: String,
     start: Date,
     end: Date,
-    first_entry: Boolean,
+    week_of: Date, // starts on mondays
   },
   {
     timestamps: true,

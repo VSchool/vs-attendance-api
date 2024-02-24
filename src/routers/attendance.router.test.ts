@@ -74,13 +74,24 @@ describe("attendance.router.ts", () => {
       jest.fn().mockResolvedValue([{}, {}, {}]),
     );
     const response = await mockServer().get(
-      "/api/attendance/entries?first_entry=true&email=test@test.com",
+      "/api/attendance/entries?&email=test@test.com",
     );
     expect(response.status).toBe(200);
     expect(response.body.entries.length).toBe(3);
     expect(getAllEntriesSpy).toHaveBeenCalledWith({
-      first_entry: true,
       email: "test@test.com",
     });
+  });
+
+  it("should ignore invalid filter query fields provided", async () => {
+    getAllEntriesSpy.mockImplementationOnce(
+      jest.fn().mockResolvedValue([{}, {}, {}]),
+    );
+    const response = await mockServer().get(
+      "/api/attendance/entries?invalid=invalid",
+    );
+    expect(response.status).toBe(200);
+    expect(response.body.entries.length).toBe(3);
+    expect(getAllEntriesSpy).toHaveBeenCalledWith({});
   });
 });

@@ -8,7 +8,7 @@ export const checkIn = async (user: User) => {
     last_name: user.lastName,
     start: new Date(),
     email: user.email,
-    week_of: fns.previousMonday(new Date()),
+    week_of: fns.startOfDay(fns.previousMonday(new Date())),
   });
   const doc = await entry.save();
   return doc;

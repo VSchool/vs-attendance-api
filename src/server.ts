@@ -46,7 +46,7 @@ server.use(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   (err: Error, req: Request, res: Response, _next: NextFunction): void => {
     const status = err.name === "UnauthorizedError" ? 401 : 500;
-    res.status(status).send({ message: err.message });
+    res.status(status).send({ message: err.message, success: false });
   },
 );
 

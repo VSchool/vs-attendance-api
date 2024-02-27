@@ -12,7 +12,7 @@ const attendanceRouter = ex.Router();
 
 attendanceRouter.get("/entries", async (req, res) => {
   const entries = await getAllEntries(parseEntryFilterQueryParams(req.query));
-  res.status(200).send({ entries });
+  res.status(200).send({ entries, success: true });
 });
 
 attendanceRouter.use(

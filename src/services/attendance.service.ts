@@ -3,12 +3,14 @@ import { EntryFilters, User } from "../types";
 import fns from "date-fns";
 
 export const checkIn = async (user: User) => {
+
+  const today = new Date();
   const entry = new EntryModel({
     first_name: user.firstName,
     last_name: user.lastName,
     start: new Date(),
     email: user.email,
-    week_of: fns.startOfDay(fns.previousMonday(new Date())),
+    week_of: fns.startOfDay(fns.isMonday(today) ? today : fns.previousMonday(new Date())),
   });
   const doc = await entry.save();
   return doc;

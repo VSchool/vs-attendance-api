@@ -4,6 +4,7 @@ import { qrCodeRouter } from "./routers/qr-code.router";
 import cors from "cors";
 import { ORIGIN_WHITELIST } from "./constants";
 import { attendanceRouter } from "./routers/attendance.router";
+import { authRouter } from "./routers/auth.router";
 
 const server = ex();
 
@@ -33,6 +34,7 @@ server.get(["/", "/docs"], (req, res) => {
     .sendFile(path.resolve(__dirname, "..", "public", "documentation.html"));
 });
 
+server.use("/api/auth", authRouter);
 server.use("/api/qr-code", qrCodeRouter);
 server.use("/api/attendance", attendanceRouter);
 

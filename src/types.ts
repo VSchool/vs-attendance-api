@@ -1,17 +1,17 @@
-export interface User {
+export interface EntryPayload {
   firstName: string;
   lastName: string;
   email: string;
 }
 
 export interface TimeEntry {
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   email: string;
   start: string;
   end?: string;
-  full_name: string;
   createdAt: string;
+  week_of: string;
 }
 
 export enum SubmissionType {
@@ -21,4 +21,9 @@ export enum SubmissionType {
 
 export interface EntryFilters {
   email?: string;
+}
+
+export interface AdminLoginPayload {
+  username: string;
+  password: string;
 }

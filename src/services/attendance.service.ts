@@ -1,23 +1,24 @@
 import { EntryModel } from "../models/entry.model";
-import { EntryFilters, User } from "../types";
+import { EntryFilters, EntryPayload } from "../types";
 import fns from "date-fns";
 
-export const checkIn = async (user: User) => {
-
+export const checkIn = async (payload: EntryPayload) => {
   const today = new Date();
   const entry = new EntryModel({
-    first_name: user.firstName,
-    last_name: user.lastName,
+    first_name: payload.firstName,
+    last_name: payload.lastName,
     start: new Date(),
-    email: user.email,
-    week_of: fns.startOfDay(fns.isMonday(today) ? today : fns.previousMonday(new Date())),
+    email: payload.email,
+    week_of: fns.startOfDay(
+      fns.isMonday(today) ? today : fns.previousMonday(new Date()),
+    ),
   });
   const doc = await entry.save();
   return doc;
 };
 
-export const checkOut = async (user: User) => {
-  const entries = await EntryModel.find({ email: user.email }).sort({
+export const checkOut = async (payload: EntryPayload) => {
+  const entries = await EntryModel.find({ email: payload.email }).sort({
     createdAt: "desc",
   });
   const latest = entries[0];

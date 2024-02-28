@@ -1,5 +1,4 @@
 import mg from "mongoose";
-
 const EntrySchema = new mg.Schema(
   {
     first_name: String,

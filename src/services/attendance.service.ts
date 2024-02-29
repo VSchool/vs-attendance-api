@@ -1,5 +1,5 @@
 import { EntryModel } from "../models/entry.model";
-import { EntryFilters, EntryPayload } from "../types";
+import { EntryFilters, EntryPayload, TimeEntry } from "../types";
 import fns from "date-fns";
 
 export const checkIn = async (payload: EntryPayload) => {
@@ -34,4 +34,10 @@ export const checkOut = async (payload: EntryPayload) => {
 export const getAllEntries = async (filters: EntryFilters) => {
   const entries = await EntryModel.find(filters);
   return entries;
+};
+
+export const updateEntry = async (id: string, fields: Partial<TimeEntry>) => {
+  const entry = await EntryModel.findByIdAndUpdate(id, fields, { new: true });
+  if (!entry) throw Error("No entry found with id: " + id);
+  return entry;
 };

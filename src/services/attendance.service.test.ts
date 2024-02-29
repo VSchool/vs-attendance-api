@@ -1,5 +1,10 @@
 import { EntryModel } from "../models/entry.model";
-import { checkIn, checkOut, getAllEntries } from "./attendance.service";
+import {
+  checkIn,
+  checkOut,
+  getAllEntries,
+  updateEntry,
+} from "./attendance.service";
 import fns from "date-fns";
 
 jest.mock("../models/entry.model");
@@ -93,6 +98,35 @@ describe("attendance.service.test.ts", () => {
       expect(EntryModel.find).toHaveBeenCalledWith({
         email: "test@test.com",
       });
+    });
+  });
+
+  describe("updateEntry()", () => {
+    it("should update entry with valid _id", async () => {
+      jest
+        .spyOn(EntryModel, "findByIdAndUpdate")
+        .mockImplementationOnce(
+          jest.fn().mockResolvedValue({ _id: "0", first_name: "test" }),
+        );
+      const entry = await updateEntry("0", { first_name: "test" });
+      expect(EntryModel.findByIdAndUpdate).toHaveBeenCalledWith(
+        "0",
+        { first_name: "test" },
+        { new: true },
+      );
+      expect(entry._id).toBe("0");
+    });
+
+    it("should throw error if no entry found", async () => {
+      jest
+        .spyOn(EntryModel, "findByIdAndUpdate")
+        .mockImplementationOnce(jest.fn().mockResolvedValue(null));
+      try {
+        const entry = await updateEntry("0", { first_name: "test" });
+        expect(entry).toBe(null);
+      } catch (err) {
+        expect((err as Error).message).toBe("No entry found with id: 0");
+      }
     });
   });
 });

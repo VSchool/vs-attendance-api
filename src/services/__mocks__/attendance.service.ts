@@ -15,3 +15,4 @@ export const checkOut = jest.fn((payload: EntryPayload) =>
   } as TimeEntry),
 );
 export const getAllEntries = jest.fn(() => Promise.resolve<TimeEntry[]>([]));
+export const updateEntry = jest.fn(() => Promise.resolve({} as TimeEntry));

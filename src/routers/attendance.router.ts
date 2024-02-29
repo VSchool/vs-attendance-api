@@ -3,19 +3,40 @@ import {
   checkIn,
   checkOut,
   getAllEntries,
+  updateEntry,
 } from "../services/attendance.service";
-import { SubmissionType, EntryPayload } from "../types";
+import { SubmissionType, EntryPayload, TimeEntry } from "../types";
 import { parseEntryFilterQueryParams } from "../utils";
-import { validateAccessToken } from "../middleware";
+import { validateAccessToken, validateAdminAccessToken } from "../middleware";
 
 const attendanceRouter = ex.Router();
 
-attendanceRouter.get("/entries", async (req, res) => {
-  const entries = await getAllEntries(parseEntryFilterQueryParams(req.query));
-  res.status(200).send({ entries, success: true });
+attendanceRouter.get("/entries", async (req, res, next) => {
+  try {
+    const entries = await getAllEntries(parseEntryFilterQueryParams(req.query));
+    res.status(200).send({ entries, success: true });
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
 });
 
-// PUT entries/:id
+attendanceRouter.put(
+  "/entries/:id",
+  validateAdminAccessToken(),
+  async (req, res, next) => {
+    try {
+      const entry = await updateEntry(
+        req.params.id,
+        req.body.fields as Partial<TimeEntry>,
+      );
+      res.status(201).send({ success: true, entry });
+    } catch (err) {
+      console.error(err);
+      next(err);
+    }
+  },
+);
 // DELETE entries:id
 // POST entries
 

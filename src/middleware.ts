@@ -1,6 +1,13 @@
-import { expressjwt } from "express-jwt";
+import * as exjwt from "express-jwt";
 
 export const validateAccessToken = () =>
-  expressjwt({ secret: process.env.SECRET as string, algorithms: ["HS256"] });
+  exjwt.expressjwt({
+    secret: process.env.SECRET as string,
+    algorithms: ["HS256"],
+  });
 
-// validate admin access token
+export const validateAdminAccessToken = () =>
+  exjwt.expressjwt({
+    secret: process.env.ADMIN_SECRET as string,
+    algorithms: ["HS256"],
+  });

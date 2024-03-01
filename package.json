@@ -10,6 +10,7 @@
     "format": "prettier . --write",
     "set-env": "dotenvx encrypt",
     "db:seed": "dotenvx run -- node ./db/scripts/seed",
+    "db:create-admin-user": "dotenvx run -- node ./db/scripts/create-admin-user",
     "db:migrate": "dotenvx run -- node ./db/scripts/migrate"
   },
   "engines": {

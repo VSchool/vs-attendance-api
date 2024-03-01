@@ -1,23 +1,19 @@
 import { EntryModel } from "../models/entry.model";
-import { EntryFilters, User } from "../types";
-import fns from "date-fns";
+import { EntryFilters, EntryPayload, TimeEntry } from "../types";
 
-export const checkIn = async (user: User) => {
-
-  const today = new Date();
+export const checkIn = async (payload: EntryPayload) => {
   const entry = new EntryModel({
-    first_name: user.firstName,
-    last_name: user.lastName,
+    first_name: payload.firstName,
+    last_name: payload.lastName,
     start: new Date(),
-    email: user.email,
-    week_of: fns.startOfDay(fns.isMonday(today) ? today : fns.previousMonday(new Date())),
+    email: payload.email,
   });
   const doc = await entry.save();
   return doc;
 };
 
-export const checkOut = async (user: User) => {
-  const entries = await EntryModel.find({ email: user.email }).sort({
+export const checkOut = async (payload: EntryPayload) => {
+  const entries = await EntryModel.find({ email: payload.email }).sort({
     createdAt: "desc",
   });
   const latest = entries[0];
@@ -33,4 +29,24 @@ export const checkOut = async (user: User) => {
 export const getAllEntries = async (filters: EntryFilters) => {
   const entries = await EntryModel.find(filters);
   return entries;
+};
+
+export const updateEntry = async (id: string, fields: Partial<TimeEntry>) => {
+  const entry = await EntryModel.findOneAndUpdate({ _id: id }, fields, {
+    new: true,
+  });
+  if (!entry) throw Error("No entry found with id: " + id);
+  return entry;
+};
+
+export const deleteEntry = async (id: string) => {
+  const entry = await EntryModel.findByIdAndDelete(id);
+  if (!entry) throw Error("No entry found with id: " + id);
+  return true;
+};
+
+export const createEntry = async (fields: TimeEntry) => {
+  const entry = new EntryModel(fields);
+  const doc = await entry.save();
+  return doc;
 };

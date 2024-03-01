@@ -1,6 +1,13 @@
 import { EntryModel } from "../models/entry.model";
-import { checkIn, checkOut, getAllEntries } from "./attendance.service";
-import fns from "date-fns";
+import { TimeEntry } from "../types";
+import {
+  checkIn,
+  checkOut,
+  createEntry,
+  deleteEntry,
+  getAllEntries,
+  updateEntry,
+} from "./attendance.service";
 
 jest.mock("../models/entry.model");
 jest.useFakeTimers().setSystemTime(new Date(2024, 1, 1));
@@ -18,7 +25,6 @@ describe("attendance.service.test.ts", () => {
         last_name: "user",
         email: "new@user.com",
         start: new Date(),
-        week_of: fns.previousMonday(Date()),
       });
       expect(EntryModel.prototype.save).toHaveBeenCalledWith();
     });
@@ -93,6 +99,88 @@ describe("attendance.service.test.ts", () => {
       expect(EntryModel.find).toHaveBeenCalledWith({
         email: "test@test.com",
       });
+    });
+  });
+
+  describe("updateEntry()", () => {
+    it("should update entry with valid _id", async () => {
+      jest
+        .spyOn(EntryModel, "findOneAndUpdate")
+        .mockImplementationOnce(
+          jest.fn().mockResolvedValue({ _id: "0", first_name: "test" }),
+        );
+      const entry = await updateEntry("0", { first_name: "test" });
+      expect(EntryModel.findOneAndUpdate).toHaveBeenCalledWith(
+        { _id: "0" },
+        { first_name: "test" },
+        { new: true },
+      );
+      expect(entry._id).toBe("0");
+    });
+
+    it("should throw error if no entry found", async () => {
+      jest
+        .spyOn(EntryModel, "findOneAndUpdate")
+        .mockImplementationOnce(jest.fn().mockResolvedValue(null));
+      try {
+        const entry = await updateEntry("0", { first_name: "test" });
+        expect(entry).toBe(null);
+      } catch (err) {
+        expect((err as Error).message).toBe("No entry found with id: 0");
+      }
+    });
+  });
+
+  describe("deleteEntry()", () => {
+    it("should delete entry with valid _id", async () => {
+      jest
+        .spyOn(EntryModel, "findByIdAndDelete")
+        .mockImplementationOnce(jest.fn().mockResolvedValue(true));
+      const entry = await deleteEntry("0");
+      expect(EntryModel.findByIdAndDelete).toHaveBeenCalledWith("0");
+      expect(entry).toBe(true);
+    });
+
+    it("should throw error if no entry found", async () => {
+      jest
+        .spyOn(EntryModel, "findByIdAndDelete")
+        .mockImplementationOnce(jest.fn().mockResolvedValue(null));
+      try {
+        const entry = await deleteEntry("0");
+        expect(entry).toBe(null);
+      } catch (err) {
+        expect((err as Error).message).toBe("No entry found with id: 0");
+      }
+    });
+  });
+
+  describe("createEntry()", () => {
+    it("should create entry with valid fields", async () => {
+      jest.spyOn(EntryModel.prototype, "save");
+      const fields = {
+        first_name: "test",
+        last_name: "test",
+        email: "test@test.com",
+        start: new Date().toISOString(),
+        createdAt: new Date().toISOString(),
+      };
+      await createEntry(fields);
+      expect(EntryModel.prototype.save).toHaveBeenCalledWith();
+      expect(EntryModel).toHaveBeenCalledWith(fields);
+    });
+
+    it("should fail creation with invalid fields", async () => {
+      jest.spyOn(EntryModel.prototype, "save").mockImplementationOnce(() => {
+        throw Error("ValidationError");
+      });
+      const invalidFields = {};
+      try {
+        const entry = await createEntry(invalidFields as TimeEntry);
+        expect(entry).toBeFalsy();
+      } catch (err) {
+        expect(EntryModel.prototype.save).toHaveBeenCalledWith();
+        expect((err as Error).message).toBe("ValidationError");
+      }
     });
   });
 });

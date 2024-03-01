@@ -1,12 +1,5 @@
 const { MongoClient } = require("mongodb");
-
-const createClient = () =>
-  new MongoClient(`${process.env.MONGODB_URI}/${process.env.DB_NAME}`);
-
-const connect = async (client) => {
-  await client.connect();
-  console.log("connected to db" + process.env.MONGODB_URI);
-};
+const { connect, createClient } = require("./lib");
 
 /**
  * @param {MongoClient} client
@@ -32,7 +25,7 @@ const main = async () => {
   try {
     await connect(client);
     await createAdminUser(client);
-    console.log("migration complete!");
+    console.log("admin user created!");
   } catch (err) {
     console.error(err);
   } finally {

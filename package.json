@@ -9,9 +9,14 @@
     "lint": "tsc --noEmit && eslint --fix . && npm run format",
     "format": "prettier . --write",
     "set-env": "dotenvx encrypt",
-    "db:seed": "dotenvx run -- node ./db/scripts/seed",
-    "db:create-admin-user": "dotenvx run -- node ./db/scripts/create-admin-user",
-    "db:migrate": "dotenvx run -- node ./db/scripts/migrate"
+    "db:seed:dev": "dotenvx run --env-file=.env -- node ./db/scripts/seed",
+    "db:seed:qa": "dotenvx run --env-file=.env.qa -- node ./db/scripts/seed",
+    "db:admin-user:create:dev": "dotenvx run --env-file=.env -- node ./db/scripts/create-admin-user",
+    "db:admin-user:create:qa": "dotenvx run --env-file=.env.qa -- node ./db/scripts/create-admin-user",
+    "db:admin-user:create:prod": "dotenvx run --env-file=.env.ci -- node ./db/scripts/create-admin-user",
+    "db:migrate:dev": "dotenvx run --env-file=.env -- node ./db/scripts/migrate",
+    "db:migrate:qa": "dotenvx run --env-file=.env.qa -- node ./db/scripts/migrate",
+    "db:migrate:prod": "dotenvx run --env-file=.env.ci -- node ./db/scripts/migrate"
   },
   "engines": {
     "node": ">=20.11.0"

@@ -11,8 +11,7 @@ const connect = async (client) => {
 /**
  * @param {MongoClient} client
  */
-const task = async (client) => {
-  // create admin user
+const createAdminUser = async (client) => {
   await client
     .db()
     .collection("users")
@@ -32,7 +31,7 @@ const main = async () => {
   const client = createClient();
   try {
     await connect(client);
-    await task(client);
+    await createAdminUser(client);
     console.log("migration complete!");
   } catch (err) {
     console.error(err);

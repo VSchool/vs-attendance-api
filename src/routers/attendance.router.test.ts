@@ -10,7 +10,7 @@ const checkoutSpy = jest.spyOn(attendanceService, "checkOut");
 const getAllEntriesSpy = jest.spyOn(attendanceService, "getAllEntries");
 
 describe("attendance.router.ts", () => {
-  describe("/api/attendance/log-entry", () => {
+  describe("GET /api/attendance/log-entry", () => {
     it("should fail authorization if access_token is invalid", async () => {
       const response = await mockServer()
         .post("/api/attendance/log-entry")
@@ -105,7 +105,7 @@ describe("attendance.router.ts", () => {
     });
   });
 
-  describe("/api/attendance/entries/:id", () => {
+  describe("PUT /api/attendance/entries/:id", () => {
     it("should fail if admin access token is invalid", async () => {
       const response = await mockServer()
         .put("/api/attendance/entries/0")
@@ -113,13 +113,66 @@ describe("attendance.router.ts", () => {
       expect(response.statusCode).toBe(401);
     });
 
-    it("should update entry with admin access token", async () => {
+    it("should update entry with given id and request body", async () => {
       const response = await mockServer()
         .put("/api/attendance/entries/0")
         .set("Authorization", `Bearer ACCESS_TOKEN`)
         .send({ fields: {} });
       expect(response.statusCode).toBe(201);
       expect(response.body).toEqual({ success: true, entry: {} });
+    });
+  });
+
+  describe("DELETE /api/attendance/entries/:id", () => {
+    it("should fail if admin access token is invalid", async () => {
+      const response = await mockServer()
+        .put("/api/attendance/entries/0")
+        .send({ fields: {} });
+      expect(response.statusCode).toBe(401);
+    });
+
+    it("should delete entry with given id", async () => {
+      const response = await mockServer()
+        .delete("/api/attendance/entries/0")
+        .set("Authorization", `Bearer ACCESS_TOKEN`)
+        .send({ fields: {} });
+      expect(response.statusCode).toBe(201);
+      expect(response.body).toEqual({ success: true, entryId: "0" });
+    });
+  });
+
+  describe("POST /api/attendance/entries", () => {
+    it("should fail if admin access token is invalid", async () => {
+      const response = await mockServer()
+        .put("/api/attendance/entries/0")
+        .send({ fields: {} });
+      expect(response.statusCode).toBe(401);
+    });
+
+    it("should create entry with valid request body", async () => {
+      const response = await mockServer()
+        .post("/api/attendance/entries")
+        .set("Authorization", `Bearer ACCESS_TOKEN`)
+        .send({ fields: {} });
+      expect(response.statusCode).toBe(201);
+      expect(response.body).toEqual({ success: true, entry: { _id: "0" } });
+    });
+
+    it("should fail with invalid request body", async () => {
+      jest
+        .spyOn(attendanceService, "createEntry")
+        .mockImplementationOnce(
+          jest.fn().mockRejectedValue(Error("ValidationError")),
+        );
+      const response = await mockServer()
+        .post("/api/attendance/entries")
+        .set("Authorization", `Bearer ACCESS_TOKEN`)
+        .send({ fields: {} });
+      expect(response.statusCode).toBe(500);
+      expect(response.body).toEqual({
+        success: false,
+        message: "ValidationError",
+      });
     });
   });
 });

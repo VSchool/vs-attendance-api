@@ -1,17 +1,12 @@
 import { EntryModel } from "../models/entry.model";
 import { EntryFilters, EntryPayload, TimeEntry } from "../types";
-import fns from "date-fns";
 
 export const checkIn = async (payload: EntryPayload) => {
-  const today = new Date();
   const entry = new EntryModel({
     first_name: payload.firstName,
     last_name: payload.lastName,
     start: new Date(),
     email: payload.email,
-    week_of: fns.startOfDay(
-      fns.isMonday(today) ? today : fns.previousMonday(new Date()),
-    ),
   });
   const doc = await entry.save();
   return doc;
@@ -37,7 +32,21 @@ export const getAllEntries = async (filters: EntryFilters) => {
 };
 
 export const updateEntry = async (id: string, fields: Partial<TimeEntry>) => {
-  const entry = await EntryModel.findByIdAndUpdate(id, fields, { new: true });
+  const entry = await EntryModel.findOneAndUpdate({ _id: id }, fields, {
+    new: true,
+  });
   if (!entry) throw Error("No entry found with id: " + id);
   return entry;
+};
+
+export const deleteEntry = async (id: string) => {
+  const entry = await EntryModel.findByIdAndDelete(id);
+  if (!entry) throw Error("No entry found with id: " + id);
+  return true;
+};
+
+export const createEntry = async (fields: TimeEntry) => {
+  const entry = new EntryModel(fields);
+  const doc = await entry.save();
+  return doc;
 };

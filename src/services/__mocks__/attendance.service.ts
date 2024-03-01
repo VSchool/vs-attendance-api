@@ -14,5 +14,9 @@ export const checkOut = jest.fn((payload: EntryPayload) =>
     email: payload.email,
   } as TimeEntry),
 );
-export const getAllEntries = jest.fn(() => Promise.resolve<TimeEntry[]>([]));
-export const updateEntry = jest.fn(() => Promise.resolve({} as TimeEntry));
+export const getAllEntries = jest.fn().mockResolvedValue([] as TimeEntry[]);
+export const updateEntry = jest.fn().mockResolvedValue({} as TimeEntry);
+export const deleteEntry = jest.fn().mockResolvedValue(true);
+export const createEntry = jest
+  .fn()
+  .mockResolvedValue({ _id: "0" } as TimeEntry);

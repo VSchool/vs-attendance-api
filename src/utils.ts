@@ -1,5 +1,6 @@
 import { Request } from "express";
 import { EntryFilters } from "./types";
+import fns from "date-fns";
 
 export const parseEntryFilterQueryParams = (
   params: Request["query"],
@@ -19,4 +20,10 @@ export const parseEntryFilterQueryParams = (
     }
     return output;
   }, {} as EntryFilters);
+};
+
+export const getPreviousMonday = (date: Date) => {
+  return fns.startOfDay(
+    fns.isMonday(date) ? date : fns.previousMonday(new Date()),
+  );
 };

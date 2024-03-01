@@ -5,13 +5,14 @@ export interface EntryPayload {
 }
 
 export interface TimeEntry {
+  _id?: string;
   first_name: string;
   last_name: string;
   email: string;
   start: string;
   end?: string;
   createdAt: string;
-  week_of: string;
+  week_of?: string;
 }
 
 export enum SubmissionType {

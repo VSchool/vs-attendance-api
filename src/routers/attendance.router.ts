@@ -2,6 +2,8 @@ import ex from "express";
 import {
   checkIn,
   checkOut,
+  createEntry,
+  deleteEntry,
   getAllEntries,
   updateEntry,
 } from "../services/attendance.service";
@@ -21,6 +23,20 @@ attendanceRouter.get("/entries", async (req, res, next) => {
   }
 });
 
+attendanceRouter.post(
+  "/entries",
+  validateAdminAccessToken(),
+  async (req, res, next) => {
+    try {
+      const entry = await createEntry(req.body.fields as TimeEntry);
+      res.status(201).send({ success: true, entry });
+    } catch (err) {
+      console.error(err);
+      next(err);
+    }
+  },
+);
+
 attendanceRouter.put(
   "/entries/:id",
   validateAdminAccessToken(),
@@ -37,8 +53,20 @@ attendanceRouter.put(
     }
   },
 );
-// DELETE entries:id
-// POST entries
+
+attendanceRouter.delete(
+  "/entries/:id",
+  validateAdminAccessToken(),
+  async (req, res, next) => {
+    try {
+      await deleteEntry(req.params.id);
+      res.status(201).send({ success: true, entryId: req.params.id });
+    } catch (err) {
+      console.error(err);
+      next(err);
+    }
+  },
+);
 
 attendanceRouter.post(
   "/log-entry",

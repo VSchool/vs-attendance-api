@@ -35,7 +35,8 @@ const EntrySchema = new mg.Schema(
 );
 
 EntrySchema.pre(["save", "findOneAndUpdate"], function (next) {
-  const start = new Date(this.get("start"));
+  const start = this.get('start');
+  if(!start) return next();
   this.set(
     "week_of",
     startOfDay(isMonday(start) ? start : previousMonday(start)),

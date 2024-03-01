@@ -1,5 +1,5 @@
-import { isMonday, previousMonday, startOfDay } from "date-fns";
 import mg from "mongoose";
+import { getPreviousMonday } from "../utils";
 const EntrySchema = new mg.Schema(
   {
     first_name: {
@@ -35,12 +35,9 @@ const EntrySchema = new mg.Schema(
 );
 
 EntrySchema.pre(["save", "findOneAndUpdate"], function (next) {
-  const start = this.get('start');
-  if(!start) return next();
-  this.set(
-    "week_of",
-    startOfDay(isMonday(start) ? start : previousMonday(start)),
-  );
+  const start = this.get("start") as string;
+  if (!start) return next();
+  this.set("week_of", getPreviousMonday(start));
   next();
 });
 

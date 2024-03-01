@@ -1,31 +1,11 @@
 const { MongoClient } = require("mongodb");
-
-const createClient = () =>
-  new MongoClient(`${process.env.MONGODB_URI}/${process.env.DB_NAME}`);
-
-const connect = async (client) => {
-  await client.connect();
-  console.log("connected to db" + process.env.MONGODB_URI);
-};
+const { connect, createClient } = require("./lib");
 
 /**
  * @param {MongoClient} client
  */
 const task = async (client) => {
-  // create admin user
-  await client
-    .db()
-    .collection("users")
-    .insertOne({
-      admin: true,
-      username: "admin",
-      password: require("crypto")
-        .createHash("sha256")
-        .update(process.env.ADMIN_USER_PASSWORD, "utf8")
-        .digest("hex"),
-      first_name: "admin",
-      last_name: "user",
-    });
+  // no migration tasks in this release
 };
 
 const main = async () => {

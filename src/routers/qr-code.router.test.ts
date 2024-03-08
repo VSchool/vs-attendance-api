@@ -38,4 +38,17 @@ describe("qr-code-router.ts", () => {
       expect(response.body.message).toBe("No Authorization token found");
     });
   });
+
+  describe("GET /api/qr-code/config", () => {
+    it("should return config settings for client admin", async () => {
+      const response = await mockServer().get("/api/qr-code/config");
+      expect(response.status).toBe(200);
+      expect(response.body.config).toEqual({
+        interval: 60000,
+        latitude: 40.83046201410233,
+        longitude: -111.93095531534195,
+        maxRange: 0.076,
+      });
+    });
+  });
 });

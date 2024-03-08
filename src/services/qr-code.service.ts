@@ -27,3 +27,10 @@ export const decodeQRCodeDataUrl = async (
     console.error(err);
   }
 };
+
+export const getAdminClientConfig = () => ({
+  interval: Number(process.env.QR_CODE_INTERVAL_DURATION || 60000),
+  latitude: Number(process.env.LOCATION_LATITUDE || 40.83046201410233),
+  longitude: Number(process.env.LOCATION_LONGITUDE || -111.93095531534195),
+  maxRange: Number(process.env.MAXIMUM_RANGE || 0.076),
+});

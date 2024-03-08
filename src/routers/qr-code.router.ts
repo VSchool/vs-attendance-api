@@ -1,5 +1,8 @@
 import ex from "express";
-import { generateQRCode } from "../services/qr-code.service";
+import {
+  generateQRCode,
+  getAdminClientConfig,
+} from "../services/qr-code.service";
 import { generateAccessToken } from "../services/auth.service";
 import { validateAccessToken } from "../middleware";
 
@@ -16,6 +19,10 @@ qrCodeRouter.get("/generate", async (req, res) => {
 
 qrCodeRouter.get("/validate", validateAccessToken(), (req, res) => {
   res.status(200).send({ success: true });
+});
+
+qrCodeRouter.get("/config", (req, res) => {
+  res.status(200).send({ config: getAdminClientConfig() });
 });
 
 export { qrCodeRouter };

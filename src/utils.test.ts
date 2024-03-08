@@ -1,4 +1,4 @@
-import { parseEntryFilterQueryParams } from "./utils";
+import { parseEntryFilterQueryParams, validateCoords } from "./utils";
 
 describe("utils.ts", () => {
   describe("parseEntryFilterQueryParams()", () => {
@@ -17,6 +17,19 @@ describe("utils.ts", () => {
         nope: "nope",
       });
       expect(output).toEqual({});
+    });
+  });
+
+  describe("validateCoords()", () => {
+    it("should return true for coordinates within the maximum range", () => {
+      expect(
+        validateCoords({ latitude: 40.830462, longitude: -111.93095 }),
+      ).toBe(true);
+    });
+    it("should return false for coordinates outside the maximum range", () => {
+      expect(
+        validateCoords({ latitude: 41.830462, longitude: -112.93095 }),
+      ).toBe(false);
     });
   });
 });

@@ -29,3 +29,27 @@ export const getPreviousMonday = (date: Date | string) => {
 
 export const hashString = (str: string) =>
   createHash("sha256").update(str, "utf8").digest("hex");
+
+export const validateCoords = (coords: {
+  latitude: number;
+  longitude: number;
+}) => {
+  const getDistance = (from: number, to: number) => Math.abs(from - to);
+  return [
+    getDistance(coords.latitude, Number(process.env.LOCATION_LATITUDE)),
+    getDistance(coords.longitude, Number(process.env.LOCATION_LONGITUDE)),
+  ].every((distance) => distance <= Number(process.env.MAXIMUM_RANGE));
+};
+
+export const parseIp = (req: Request): string => {
+  const forwardedIp = req.headers["x-forwarded-for"];
+  const ip = Array.isArray(forwardedIp)
+    ? forwardedIp[0]
+    : forwardedIp
+      ? forwardedIp.split(",").pop()?.trim()
+      : req.socket.remoteAddress;
+  return ip as string;
+};
+
+export const isProductionEnv = () =>
+  !["test", "development"].includes(process.env.NODE_ENV as string);

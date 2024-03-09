@@ -82,9 +82,7 @@ describe("qr-code-router.ts", () => {
       const response = await mockServer().get("/api/qr-code/generate");
       expect(response.status).toBe(500);
       expect(getLocationCoordinatesSpy).toHaveBeenCalledTimes(1);
-      expect(response.body.message).toEqual(
-        "InvalidLocation: Invalid location of request",
-      );
+      expect(response.body.message).toEqual("Invalid location of request");
     });
   });
 

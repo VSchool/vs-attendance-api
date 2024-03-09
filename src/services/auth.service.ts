@@ -24,11 +24,10 @@ export const generateAdminAccessToken = () => {
 
 export const validateAdminPassword = async (payload: AdminLoginPayload) => {
   const adminUser = await UserModel.findOne({ username: payload.username });
-  if (!adminUser) throw Error("Unauthorized: No user found");
+  if (!adminUser) throw Error("No user found");
   const hash = createHash("sha256")
     .update(payload.password, "utf8")
     .digest("hex");
-  if (hash !== adminUser.password)
-    throw Error("Unauthorized: Invalid password");
+  if (hash !== adminUser.password) throw Error("Invalid password");
   return { success: true };
 };

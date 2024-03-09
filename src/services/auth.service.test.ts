@@ -20,7 +20,7 @@ describe("auth.service.ts", () => {
         });
         expect(success).toBe(false);
       } catch (err) {
-        expect((err as Error).message).toBe("Unauthorized: No user found");
+        expect((err as Error).message).toBe("No user found");
       }
     });
 
@@ -45,7 +45,7 @@ describe("auth.service.ts", () => {
         });
         expect(success).toBe(false);
       } catch (err) {
-        expect((err as Error).message).toBe("Unauthorized: Invalid password");
+        expect((err as Error).message).toBe("Invalid password");
         expect(mockUpdate).toHaveBeenCalledWith("invalid-password", "utf8");
       }
     });

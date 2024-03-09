@@ -46,10 +46,10 @@ describe("attendance.service.test.ts", () => {
       } catch (err) {
         const { message, name } = err as Error;
         expect(name).toBe("Error");
-        expect(message).toBe("InvalidCheckout: No entries found");
+        expect(message).toBe("No entries found");
       }
     });
-    it("should throw InvalidCheckout error if last entry has an end date", async () => {
+    it("should throw error if last entry has an end date", async () => {
       jest.spyOn(EntryModel, "find").mockImplementationOnce(
         jest.fn().mockReturnValue({
           sort: jest.fn().mockResolvedValue([{ end: new Date() }]),
@@ -64,9 +64,7 @@ describe("attendance.service.test.ts", () => {
       } catch (err) {
         const { message, name } = err as Error;
         expect(name).toBe("Error");
-        expect(message).toContain(
-          "InvalidCheckout: Latest entry already has checked out at",
-        );
+        expect(message).toContain("Latest entry already has checked out at");
       }
     });
 

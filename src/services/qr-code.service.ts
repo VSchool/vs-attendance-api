@@ -23,7 +23,7 @@ export const decodeQRCodeDataUrl = async (
 
     return decoded.data;
   } catch (err) {
-    console.error(Error("Error: QR Decoding failed"));
+    console.error(Error("QR Decoding failed"));
     console.error(err);
   }
 };

@@ -23,7 +23,7 @@ qrCodeRouter.get("/generate", async (req, res, next) => {
       `${process.env.USER_CLIENT_BASE_URL}?access_token=${accessToken}`,
     );
     const dataUrl = await generateQRCode(payload);
-    res.status(200).send({ dataUrl });
+    res.status(200).send({ dataUrl, success: true });
   } catch (err) {
     console.error(err);
     next(err);

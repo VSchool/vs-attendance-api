@@ -29,5 +29,5 @@ export const decodeQRCodeDataUrl = async (
 };
 
 export const getAdminClientConfig = () => ({
-  interval: Number(process.env.QR_CODE_INTERVAL_DURATION)
+  interval: Number(process.env.QR_CODE_INTERVAL_DURATION),
 });

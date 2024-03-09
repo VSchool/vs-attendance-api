@@ -13,7 +13,12 @@ server.use((req, res, next) => {
   console.log("\n");
   console.log("Incoming request:");
   console.log("URL:", req.method, req.path, req.query);
-  console.log("Referer:", req.headers.referer, req.headers.host);
+  console.log("Referer:", req.headers.referer);
+  console.log(
+    "Client IP:",
+    req.socket.remoteAddress,
+    req.headers["x-forwarded-for"],
+  );
   console.log("Timestamp:", new Date().toISOString());
   console.log("\n");
   next();
@@ -21,7 +26,9 @@ server.use((req, res, next) => {
 server.use(ex.static(path.resolve(__dirname, "..", "public")));
 server.use(
   cors((req, cb) => {
-    cb(null, { origin: ORIGIN_WHITELIST.includes(req.headers.origin || "") });
+    cb(null, {
+      origin: ORIGIN_WHITELIST.includes(req.headers.origin as string),
+    });
   }),
 );
 server.use(ex.static(path.resolve(__dirname, "..", "public")));

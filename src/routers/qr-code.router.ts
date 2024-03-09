@@ -15,8 +15,7 @@ qrCodeRouter.get("/generate", async (req, res, next) => {
     const ip = parseIp(req);
     if (isProductionEnv()) {
       const coords = await getLocationCoordinates(ip as string);
-      if (!validateCoords(coords))
-        throw Error("InvalidLocation: Invalid location of request");
+      if (!validateCoords(coords)) throw Error("Invalid location of request");
     }
     const accessToken = generateAccessToken();
     const payload = encodeURI(

@@ -17,11 +17,9 @@ export const checkOut = async (payload: EntryPayload) => {
     createdAt: "desc",
   });
   const latest = entries[0];
-  if (!latest) throw Error("InvalidCheckout: No entries found");
+  if (!latest) throw Error("No entries found");
   if (latest.end)
-    throw Error(
-      "InvalidCheckout: Latest entry already has checked out at " + latest.end,
-    );
+    throw Error("Latest entry already has checked out at " + latest.end);
   latest.end = new Date();
   return await latest.save();
 };

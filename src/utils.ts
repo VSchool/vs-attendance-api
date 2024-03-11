@@ -46,7 +46,7 @@ export const parseIp = (req: Request): string => {
   const ip = Array.isArray(forwardedIp)
     ? forwardedIp[0]
     : forwardedIp
-      ? forwardedIp.split(",").pop()?.trim()
+      ? forwardedIp.split(",").shift()?.trim()
       : req.socket.remoteAddress;
   return ip as string;
 };

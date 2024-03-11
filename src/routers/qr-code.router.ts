@@ -13,8 +13,10 @@ const qrCodeRouter = ex.Router();
 qrCodeRouter.get("/generate", async (req, res, next) => {
   try {
     const ip = parseIp(req);
+
     if (isProductionEnv()) {
       const coords = await getLocationCoordinates(ip as string);
+      console.log('Validating location of IP: ' + ip, coords)
       if (!validateCoords(coords)) throw Error("Invalid location of request");
     }
     const accessToken = generateAccessToken();

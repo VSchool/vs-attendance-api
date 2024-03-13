@@ -6,7 +6,7 @@ import {
 import { generateAccessToken } from "../services/auth.service";
 import { validateAccessToken } from "../middleware";
 import { getLocationCoordinates } from "../services/location.service";
-import { isProductionEnv, parseIp, validateCoords } from "../utils";
+import { isLocationCheckEnabled, parseIp, validateCoords } from "../utils";
 
 const qrCodeRouter = ex.Router();
 
@@ -14,9 +14,9 @@ qrCodeRouter.get("/generate", async (req, res, next) => {
   try {
     const ip = parseIp(req);
 
-    if (isProductionEnv()) {
+    if (isLocationCheckEnabled()) {
       const coords = await getLocationCoordinates(ip as string);
-      console.log('Validating location of IP: ' + ip, coords)
+      console.log("Validating location of IP: " + ip, coords);
       if (!validateCoords(coords)) throw Error("Invalid location of request");
     }
     const accessToken = generateAccessToken();

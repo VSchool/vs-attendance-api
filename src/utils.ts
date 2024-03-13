@@ -53,3 +53,7 @@ export const parseIp = (req: Request): string => {
 
 export const isProductionEnv = () =>
   !["test", "development"].includes(process.env.NODE_ENV as string);
+
+export const isLocationCheckEnabled = () => {
+  return process.env.ENABLE_LOCATION_CHECK === "true";
+};

@@ -1,4 +1,8 @@
-import { parseEntryFilterQueryParams, validateCoords } from "./utils";
+import {
+  isLocationCheckEnabled,
+  parseEntryFilterQueryParams,
+  validateCoords,
+} from "./utils";
 
 describe("utils.ts", () => {
   describe("parseEntryFilterQueryParams()", () => {
@@ -30,6 +34,14 @@ describe("utils.ts", () => {
       expect(
         validateCoords({ latitude: 41.830462, longitude: -112.93095 }),
       ).toBe(false);
+    });
+  });
+
+  describe("isLocationCheckEnabled", () => {
+    it("Should return true or false based on process.env.ENABLE_LOCATION_CHECK value", () => {
+      expect(isLocationCheckEnabled()).toBe(
+        JSON.parse(process.env.ENABLE_LOCATION_CHECK as string),
+      );
     });
   });
 });

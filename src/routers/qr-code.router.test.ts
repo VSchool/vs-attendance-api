@@ -10,18 +10,21 @@ const signSpy = jest.spyOn(jwt, "sign");
 
 describe("qr-code-router.ts", () => {
   describe("GET /api/qr-code/generate", () => {
-    it("Should bypass location check in dev environment and generate a QR code as a base64 encoded png and an access code with configured expiration date", async () => {
+    it("Should generate a QR code as a base64 encoded png and an access code with configured expiration date", async () => {
       const getLocationCoordinatesSpy = jest.spyOn(
         locationService,
         "getLocationCoordinates",
       );
-      const isProductionEnvSpy = jest.spyOn(utils, "isProductionEnv");
-      isProductionEnvSpy.mockReturnValue(false);
+      const isLocationCheckEnabledSpy = jest.spyOn(
+        utils,
+        "isLocationCheckEnabled",
+      );
+      isLocationCheckEnabledSpy.mockReturnValue(false);
 
       const response = await mockServer().get("/api/qr-code/generate");
       expect(response.headers["content-type"]).toContain("application/json");
       expect(getLocationCoordinatesSpy).toHaveBeenCalledTimes(0);
-      expect(isProductionEnvSpy).toHaveReturnedWith(false);
+      expect(isLocationCheckEnabledSpy).toHaveReturnedWith(false);
       expect(response.body.dataUrl).toContain(
         "data:image/png;base64,iVBORw0KGgo",
       );
@@ -34,15 +37,18 @@ describe("qr-code-router.ts", () => {
       );
     });
 
-    it("Should perform location check in prod environment and generate a QR code as a base64 encoded png and an access code with configured expiration date", async () => {
+    it("Should perform location check if enabled and generate a QR code as a base64 encoded png and an access code with configured expiration date", async () => {
       const getLocationCoordinatesSpy = jest.spyOn(
         locationService,
         "getLocationCoordinates",
       );
-      const isProductionEnvSpy = jest.spyOn(utils, "isProductionEnv");
+      const isLocationCheckEnabledSpy = jest.spyOn(
+        utils,
+        "isLocationCheckEnabled",
+      );
       const validateCoordsSpy = jest.spyOn(utils, "validateCoords");
 
-      isProductionEnvSpy.mockReturnValue(true);
+      isLocationCheckEnabledSpy.mockReturnValue(true);
       getLocationCoordinatesSpy.mockResolvedValue({
         latitude: 100,
         longitude: 100,
@@ -69,10 +75,13 @@ describe("qr-code-router.ts", () => {
         locationService,
         "getLocationCoordinates",
       );
-      const isProductionEnvSpy = jest.spyOn(utils, "isProductionEnv");
+      const isLocationCheckEnabledSpy = jest.spyOn(
+        utils,
+        "isLocationCheckEnabled",
+      );
       const validateCoordsSpy = jest.spyOn(utils, "validateCoords");
 
-      isProductionEnvSpy.mockReturnValue(true);
+      isLocationCheckEnabledSpy.mockReturnValue(true);
       getLocationCoordinatesSpy.mockResolvedValue({
         latitude: 100,
         longitude: 100,
